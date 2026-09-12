@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — CodeNudge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="page-app">
+
+  <!-- TOP NAVBAR -->
+  <nav class="navbar app-navbar" id="app-nav">
+    <div class="nav-inner">
+      <a href="/dashboard.html" class="brand">
+        <span class="brand-icon">🔔</span>
+        <span class="brand-name">CodeNudge</span>
+      </a>
+
+      <div class="nav-search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="global-search-input" placeholder="Search friends by name or username (e.g. Rahul)..." />
+        <button id="clear-search-btn" class="clear-search" style="display:none;">✕</button>
+      </div>
+
+      <div class="nav-user-area">
+        <a href="/notifications.html" class="nav-notif-btn" id="notif-badge-btn" title="View Notifications">
+          <span class="bell-icon">🔔</span>
+          <span class="notif-pill" id="unread-pill" style="display:none;">0</span>
+        </a>
+
+        <div class="user-profile-menu">
+          <span class="user-avatar-small" id="nav-user-avatar">🧑‍💻</span>
+          <span class="user-nav-name" id="nav-user-name">User</span>
+          <button class="btn btn-ghost btn-xs" id="logout-btn" title="Logout">Log out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- DASHBOARD MAIN CONTENT -->
+  <main class="container dashboard-layout">
+    
+    <!-- WELCOME & STATS BANNER -->
+    <section class="welcome-banner glass-card">
+      <div class="welcome-text">
+        <h2>Hey <span id="dash-greeting-name">Developer</span>! 👋</h2>
+        <p id="dash-bio-text">Ready to get your friends to stop scrolling and start coding?</p>
+      </div>
+      <div class="quick-stats-row">
+        <div class="qstat-card">
+          <span class="qstat-number" id="stat-nudges-rcvd">0</span>
+          <span class="qstat-label">Nudges Received 📥</span>
+        </div>
+        <div class="qstat-card">
+          <span class="qstat-number" id="stat-nudges-sent">0</span>
+          <span class="qstat-label">Nudges Sent 📤</span>
+        </div>
+        <div class="qstat-card highlight">
+          <a href="https://www.hackerrank.com" target="_blank" class="hackerrank-quick-link">
+            <span>Solve DSA Now</span>
+            <span class="hr-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVE SECTION: USERS DIRECTORY -->
+    <section class="directory-section">
+      <div class="section-header-row">
+        <div>
+          <h3>Find Friends to Nudge</h3>
+          <p class="subtext" id="search-status-subtext">Showing active community members. Click 'Remind' to send them a wake-up call!</p>
+        </div>
+        <div class="filter-actions">
+          <button class="btn btn-sm btn-ghost" id="refresh-users-btn">🔄 Refresh</button>
+        </div>
+      </div>
+
+      <!-- USERS GRID -->
+      <div class="users-grid" id="users-grid">
+        <div class="loading-spinner">Loading coders...</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- QUICK REMIND MODAL (CAN BE TRIGGERED DIRECTLY FROM DASHBOARD) -->
+  <div id="reminder-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-dialog glass-card">
+      <div class="modal-header">
+        <div class="modal-user-target">
+          <span class="target-avatar" id="modal-target-avatar">🧑‍💻</span>
+          <div>
+            <h4>Remind <span id="modal-target-name">Friend</span></h4>
+            <span class="target-username" id="modal-target-username">@friend</span>
+          </div>
+        </div>
+        <button class="modal-close" id="close-modal-btn">✕</button>
+      </div>
+
+      <form id="quick-nudge-form">
+        <input type="hidden" id="modal-target-id" />
+
+        <div class="form-group">
+          <label>Select Motivation Type <span class="req">*</span></label>
+          <div class="motivation-selector" id="modal-motivations">
+            <label class="motiv-option">
+              <input type="radio" name="motivation" value="roast" checked />
+              <div class="motiv-box">
+                <span class="m-icon">😤</span>
+                <strong>Savage Roast</strong>
+                <small>Stop Netflix right now</small>
+              </div>
+            </label>
+
+            <label class="motiv-option">
+              <input type="radio" name="motivation" value="tamil_audio" />
+              <div class="motiv-box highlight-audio">
+                <span class="m-icon">🎵</span>
+                <strong>Hey Parama Padi Da!</strong>
+                <small>Plays audio motivation</small>
+              </div>
+            </label>
+
+            <label class="motiv-option">
+              <input type="radio" name="motivation" value="career" />
+              <div class="motiv-box">
+                <span class="m-icon">💼</span>
+                <strong>Career Push</strong>
+                <small>Interviews are coming</small>
+              </div>
+            </label>
+
+            <label class="motiv-option">
+              <input type="radio" name="motivation" value="friendly" />
+              <div class="motiv-box">
+                <span class="m-icon">🤝</span>
+                <strong>Friendly Push</strong>
+                <small>Let's solve together</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="modal-custom-message">Personalized Message (Optional)</label>
+          <textarea id="modal-custom-message" class="form-textarea" rows="2" placeholder="e.g. Come on Rahul, 2 LeetCode problems before sleep!"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="cancel-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="modal-send-btn">Send Nudge 🔔</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

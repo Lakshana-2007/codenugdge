@@ -1,0 +1,21 @@
+{
+  "name": "codenudge",
+  "version": "1.0.0",
+  "description": "CodeNudge — Social coding reminder web application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "codenudge",
+    "coding",
+    "reminder",
+    "social"
+  ],
+  "author": "CodeNudge Team",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer-core": "^25.10.0"
+  }
+}
